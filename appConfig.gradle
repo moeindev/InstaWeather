@@ -1,0 +1,101 @@
+ext {
+
+    versions = [
+            coreKTX : "1.3.2",
+            appCompat: "1.2.0",
+            material: "1.3.0",
+            compose: compose_version,
+            lifeCycle: "2.3.0",
+            activityCompose: "1.3.0-alpha04",
+            jUnit: "4.13.2",
+            coroutines            : '1.4.3-native-mt',
+            coroutinesCore        : '1.4.3-native-mt',
+            viewmodelCompose      : "1.0.0-alpha03",
+            fragment              : "1.2.5",
+            retrofit              : "2.9.0",
+            hiltAndroid           : hilt_android,
+            lottie                : '3.6.1',
+            leakCanary            : "2.6",
+            legacySupport         : "1.0.0",
+            whatIf                : "1.0.9",
+            bundler               : "1.0.3",
+            sandwich              : "1.0.9",
+            androidJUnit          : '1.1.2',
+            espresso              : '3.3.0',
+            robolectric           : '4.5.1',
+            coreTesting           : "2.1.0",
+            mockWebServer         : '5.0.0-alpha.2',
+            mockitoKotlin         : "2.2.0",
+            kotestAssertions      : "4.0.7",
+            hiltComposeNavigation: "1.0.0-alpha01",
+            navigation: "1.0.0-alpha09",
+            coilImage: "0.6.2"
+    ]
+
+    buildVersions = [
+            compileSdkVersion: 30,
+            buildToolsVersion: "30.0.2",
+            minSdkVersion    : 21,
+            targetSdkVersion : 30,
+            versionCode      : 1,
+            versionName      : "1.0"
+    ]
+
+    libraries = [
+            //KTX:
+            coreKTX: "androidx.core:core-ktx:$versions.coreKTX",
+            lifeCycleRuntime: "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifeCycle",
+
+
+            appCompat: "androidx.appcompat:appcompat:$versions.appCompat",
+            material: "com.google.android.material:material:$versions.material",
+
+            //Compose:
+            composeUi: "androidx.compose.ui:ui:$versions.compose",
+            composeMaterial: "androidx.compose.material:material:$versions.compose",
+            composeUiTooling: "androidx.compose.ui:ui-tooling:$versions.compose",
+            composeAnimations: "androidx.compose.animation:animation:$versions.compose",
+            activityCompose: "androidx.activity:activity-compose:$versions.activityCompose",
+            hiltComposeNavigation: "androidx.hilt:hilt-navigation-compose:$versions.hiltComposeNavigation",
+            navigation: "androidx.navigation:navigation-compose:$versions.navigation",
+
+
+            //Hilt:
+            hiltAndroid: "com.google.dagger:hilt-android:$versions.hiltAndroid",
+            hiltCompiler: "com.google.dagger:hilt-compiler:$versions.hiltAndroid",
+
+            //arch components:
+            viewModelKTX: "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifeCycle",
+            viewModelCompose: "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.viewmodelCompose",
+            commonJava8: "androidx.lifecycle:lifecycle-common-java8:$versions.lifeCycle",
+
+            //Coroutines:
+            coroutinesCore: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutinesCore",
+            coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines",
+
+            //Retrofit:
+            retrofit                 : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+            retrofitGson             : "com.squareup.retrofit2:converter-gson:$versions.retrofit",
+            sandwich                 :"com.github.skydoves:sandwich:$versions.sandwich",
+
+            lottie                   : "com.airbnb.android:lottie:$versions.lottie",
+            leakCanary               : "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary",
+            whatIf                   : "com.github.skydoves:whatif:$versions.whatIf",
+            bundler                  : "com.github.skydoves:bundler:$versions.bundler",
+
+            coilImage: "dev.chrisbanes.accompanist:accompanist-coil:$versions.coilImage"
+    ]
+
+    testLibraries = [
+            jUnit                : "junit:junit:$versions.jUnit",
+            androidJUnit         : "androidx.test.ext:junit:$versions.androidJUnit",
+            espressoCore         : "androidx.test.espresso:espresso-core:$versions.espresso",
+            coroutinesTest       : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines",
+            coroutinesAndroidTest: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines",
+            robolectric          : "org.robolectric:robolectric:$versions.robolectric",
+            coreTesting          : "androidx.arch.core:core-testing:$versions.coreTesting",
+            mockWebServer        : "com.squareup.okhttp3:mockwebserver:$versions.mockWebServer",
+            mockitoKotlin        : "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockitoKotlin",
+            kotestAssertions     : "io.kotest:kotest-assertions:$versions.kotestAssertions"
+    ]
+}
