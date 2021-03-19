@@ -18,7 +18,7 @@ jobs:
       - name: Access WEATHER_API_KEY
         env:
           WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
-        run: echo SUB_API_KEY=\"$WEATHER_API_KEY\" > ./local.properties
+        run: echo WEATHER_API_KEY=\"$WEATHER_API_KEY\" > ./local.properties
       - name: Build with Gradle after putting API KEY
         run: ./gradlew build
       - name: Run Unit Tests
