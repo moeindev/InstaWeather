@@ -1,0 +1,52 @@
+name: Build and deploy debug APK
+
+on:
+  pull_request:
+    branches: [ master, develop]
+    types: [ closed ]
+
+jobs:
+  build:
+    name: Test and deploy debug APK
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Accessing WEATHER_API_KEY
+        env:
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+        run: echo WEATHER_API_KEY=\"$WEATHER_API_KEY\" > ./local.properties
+      - name: Build with Gradle after putting API KEY
+        run: ./gradlew build
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest
+      - name: Build with Gradle for debug APK
+        run: ./gradlew build
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+      - name: Upload APK to workspace
+        uses: actions/upload-artifact@v2
+        with:
+          name: app
+          path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Send debug APk to telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.GROUP_CHAT_ID }}
+          token: ${{ secrets.BOT_TOKEN }}
+          message: |
+            Here is the debug APK for ${{ github.event_name }}
+            Runner OS: ${{ runner.os }}
+            Event: ${{ github.event_name }}
+            Job ID: ${{ github.job }}
+            Triggered by: ${{ github.actor }}
+            Branch or TAG: ${{ github.ref }}
+            Base ref: ${{ github.base_ref }}
+            Head ref: ${{ github.head_ref }}
+            Commit SHA: ${{ github.sha }}
+          document: app/build/outputs/apk/debug/app-debug.apk
