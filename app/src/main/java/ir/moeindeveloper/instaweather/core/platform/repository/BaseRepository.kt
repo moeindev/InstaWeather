@@ -5,8 +5,10 @@ import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import com.skydoves.whatif.whatIfNotNull
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.skydoves.whatif.whatIfNotNullAs
+import io.objectbox.BoxStore
+import ir.moeindeveloper.instaweather.core.platform.entity.BaseEntity
+import kotlinx.coroutines.flow.*
 
 abstract class BaseRepository {
 
@@ -25,6 +27,22 @@ abstract class BaseRepository {
             onException(this.exception)
         }.suspendOnError {
             onError(this.statusCode.toString())
+        }
+    }
+
+    inline fun <T: Any, reified Y: Any> networkAndCacheRequest(
+        store: BoxStore,
+        crossinline request: suspend() -> ApiResponse<T>,
+        crossinline onSuccess: () -> Unit,
+        crossinline onError: (message: String) -> Unit,
+        crossinline onException: (exception: Throwable) -> Unit
+    ): Flow<Y> = networkRequest(request = { request() },
+        onSuccess = { onSuccess() },
+        onError = { onError(it) },
+        onException = { onException(it) }
+    ).transform { data ->
+        data.whatIfNotNullAs<BaseEntity<Y>> { entity ->
+            store.boxFor(Y::class.java).put(entity.toBox())
         }
     }
 }
