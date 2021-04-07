@@ -3,6 +3,10 @@ package ir.moeindeveloper.instaweather.feature.common.entity
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
+import io.objectbox.relation.ToMany
+import ir.moeindeveloper.instaweather.core.platform.entity.BaseEntity
 
 @Keep
 data class Current(
@@ -34,4 +38,51 @@ data class Current(
     val windDeg: Int,
     @SerializedName("wind_speed")
     val windSpeed: Double
-)
+): BaseEntity<CurrentBox> {
+
+    override fun toBox(): CurrentBox {
+        val currentBox = CurrentBox(
+            clouds = clouds,
+            dewPoint = dewPoint,
+            dt = dt,
+            feelsLike = feelsLike,
+            humidity = humidity,
+            pressure = pressure,
+            sunrise = sunrise,
+            sunset = sunset,
+            temp = temp,
+            uvi = uvi,
+            visibility = visibility,
+            windDeg = windDeg,
+            windSpeed = windSpeed
+        )
+
+        weather.forEach { weatherObj ->
+            currentBox.weather.add(weatherObj.toBox())
+        }
+
+        return currentBox
+    }
+}
+
+
+@Keep
+@Entity
+data class CurrentBox(
+    @Id var id: Long = 0,
+    var clouds: Int,
+    var dewPoint: Double,
+    var dt: Int,
+    var feelsLike: Double,
+    var humidity: Int,
+    var pressure: Int,
+    var sunrise: Int,
+    var sunset: Int,
+    var temp: Double,
+    var uvi: Double,
+    var visibility: Int,
+    var windDeg: Int,
+    var windSpeed: Double
+) {
+    lateinit var weather: ToMany<WeatherBox>
+}

@@ -3,6 +3,9 @@ package ir.moeindeveloper.instaweather.feature.common.entity
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
+import ir.moeindeveloper.instaweather.core.platform.entity.BaseEntity
 
 @Keep
 data class FeelsLike(
@@ -14,4 +17,20 @@ data class FeelsLike(
     val morn: Double,
     @SerializedName("night")
     val night: Double
+): BaseEntity<FeelsLikeBox> {
+
+    override fun toBox(): FeelsLikeBox {
+        return FeelsLikeBox(day = day,eve = eve,morn = morn,night = night)
+    }
+
+}
+
+@Keep
+@Entity
+data class FeelsLikeBox(
+    @Id var id: Long = 0,
+    var day: Double,
+    var eve: Double,
+    var morn: Double,
+    var night: Double
 )
