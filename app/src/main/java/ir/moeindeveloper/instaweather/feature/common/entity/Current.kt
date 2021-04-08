@@ -7,6 +7,7 @@ import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import io.objectbox.relation.ToMany
 import ir.moeindeveloper.instaweather.core.platform.entity.BaseEntity
+import ir.moeindeveloper.instaweather.core.platform.entity.BoxEntity
 
 @Keep
 data class Current(
@@ -69,7 +70,7 @@ data class Current(
 @Keep
 @Entity
 data class CurrentBox(
-    @Id var id: Long = 0,
+    @Id override var id: Long = 0,
     var clouds: Int,
     var dewPoint: Double,
     var dt: Int,
@@ -83,6 +84,6 @@ data class CurrentBox(
     var visibility: Int,
     var windDeg: Int,
     var windSpeed: Double
-) {
+): BoxEntity() {
     lateinit var weather: ToMany<WeatherBox>
 }

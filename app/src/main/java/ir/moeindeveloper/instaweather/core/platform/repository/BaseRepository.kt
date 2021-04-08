@@ -8,6 +8,7 @@ import com.skydoves.whatif.whatIfNotNull
 import com.skydoves.whatif.whatIfNotNullAs
 import io.objectbox.BoxStore
 import ir.moeindeveloper.instaweather.core.platform.entity.BaseEntity
+import ir.moeindeveloper.instaweather.core.platform.entity.BoxEntity
 import kotlinx.coroutines.flow.*
 
 abstract class BaseRepository {
@@ -30,7 +31,7 @@ abstract class BaseRepository {
         }
     }
 
-    inline fun <T: Any, reified Y: Any> networkAndCacheRequest(
+    inline fun <T: Any, reified Y: BoxEntity> networkAndCacheRequest(
         store: BoxStore,
         crossinline request: suspend() -> ApiResponse<T>,
         crossinline onSuccess: () -> Unit,

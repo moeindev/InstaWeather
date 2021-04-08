@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import ir.moeindeveloper.instaweather.core.platform.entity.BaseEntity
+import ir.moeindeveloper.instaweather.core.platform.entity.BoxEntity
 
 @Keep
 data class Weather(
@@ -31,9 +32,9 @@ data class Weather(
 @Keep
 @Entity
 data class WeatherBox(
-    @Id var id: Long = 0,
+    @Id override var id: Long = 0,
     var description: String,
     var icon: String,
     var weatherId: Int,
     var main: String
-)
+): BoxEntity()

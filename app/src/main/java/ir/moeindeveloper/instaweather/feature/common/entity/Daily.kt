@@ -8,6 +8,7 @@ import io.objectbox.annotation.Id
 import io.objectbox.relation.ToMany
 import io.objectbox.relation.ToOne
 import ir.moeindeveloper.instaweather.core.platform.entity.BaseEntity
+import ir.moeindeveloper.instaweather.core.platform.entity.BoxEntity
 
 @Keep
 data class Daily(
@@ -74,7 +75,7 @@ data class Daily(
 @Keep
 @Entity
 data class DailyBox(
-    @Id var id: Long = 0,
+    @Id override var id: Long = 0,
     var clouds: Int,
     var dewPoint: Double,
     var dt: Int,
@@ -87,7 +88,7 @@ data class DailyBox(
     var uvi: Double,
     var windDeg: Int,
     var windSpeed: Double
-) {
+): BoxEntity() {
     lateinit var feelsLike: ToOne<FeelsLikeBox>
 
     lateinit var temperature: ToOne<TemperatureBox>

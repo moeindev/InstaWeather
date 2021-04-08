@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import ir.moeindeveloper.instaweather.core.platform.entity.BaseEntity
+import ir.moeindeveloper.instaweather.core.platform.entity.BoxEntity
 
 @Keep
 data class Temperature(
@@ -37,11 +38,11 @@ data class Temperature(
 @Keep
 @Entity
 data class TemperatureBox(
-    @Id var id: Long = 0,
+    @Id override var id: Long = 0,
     var morn: Double,
     var day: Double,
     var eve: Double,
     var night: Double,
     var max: Double,
     var min: Double
-)
+): BoxEntity()

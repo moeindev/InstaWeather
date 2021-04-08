@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import ir.moeindeveloper.instaweather.core.platform.entity.BaseEntity
+import ir.moeindeveloper.instaweather.core.platform.entity.BoxEntity
 
 @Keep
 data class FeelsLike(
@@ -28,9 +29,9 @@ data class FeelsLike(
 @Keep
 @Entity
 data class FeelsLikeBox(
-    @Id var id: Long = 0,
+    @Id override var id: Long = 0,
     var day: Double,
     var eve: Double,
     var morn: Double,
     var night: Double
-)
+): BoxEntity()
