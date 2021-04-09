@@ -41,9 +41,13 @@ abstract class BaseRepository {
         onSuccess = { onSuccess() },
         onError = { onError(it) },
         onException = { onException(it) }
-    ).transform { data ->
+    ).onEach { data ->
         data.whatIfNotNullAs<BaseEntity<Y>> { entity ->
             store.boxFor(Y::class.java).put(entity.toBox())
+        }
+    }.transform { data->
+        data.whatIfNotNullAs<BaseEntity<Y>> { entity ->
+            entity.toBox()
         }
     }
 }
