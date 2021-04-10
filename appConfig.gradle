@@ -14,7 +14,7 @@ ext {
             fragment              : "1.2.5",
             retrofit              : "2.9.0",
             hiltAndroid           : hilt_android,
-            lottie                : '3.6.1',
+            lottie                : '1.0.0-beta03-1',
             leakCanary            : '2.7',
             legacySupport         : "1.0.0",
             whatIf                : "1.0.9",
@@ -78,7 +78,7 @@ ext {
             retrofitGson             : "com.squareup.retrofit2:converter-gson:$versions.retrofit",
             sandwich                 :"com.github.skydoves:sandwich:$versions.sandwich",
 
-            lottie                   : "com.airbnb.android:lottie:$versions.lottie",
+            lottie                   : "com.airbnb.android:lottie-compose:$versions.lottie",
             leakCanary               : "com.squareup.leakcanary:leakcanary-android:$versions.leakCanary",
             whatIf                   : "com.github.skydoves:whatif:$versions.whatIf",
             bundler                  : "com.github.skydoves:bundler:$versions.bundler",
