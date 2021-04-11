@@ -53,7 +53,7 @@ fun Failed(reason: String, onRetryClick: () -> Unit) {
 @Composable
 fun FailedPreview() {
     InstaWeatherTheme {
-        Failed(reason = "Fucked up!") {
+        Failed(reason = "Network failure!") {
 
         }
     }
