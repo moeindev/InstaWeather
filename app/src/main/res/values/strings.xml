@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">InstaWeather</string>
     <string name="retry">Retry!</string>
+    <string name="settings_content_description">Settings Button</string>
 </resources>
