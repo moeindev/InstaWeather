@@ -19,7 +19,7 @@ fun HomeHeader(lastUpdate: String, city: String, onOptionClick: () -> Unit) {
     Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceEvenly) {
         Column(modifier = Modifier.padding(5.dp)) {
             Text(text = lastUpdate,
-                color = MaterialTheme.colors.onPrimary,
+                color = MaterialTheme.colors.onPrimary.copy(alpha = 0.5f),
                 style = MaterialTheme.typography.caption)
             Text(text = city,
                 color = MaterialTheme.colors.onPrimary,
