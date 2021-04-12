@@ -1,7 +1,11 @@
 package ir.moeindeveloper.instaweather.feature.common.util
 
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import androidx.compose.ui.graphics.Color
 import ir.moeindeveloper.instaweather.R
+import ir.moeindeveloper.instaweather.core.log.appLog
 
 enum class WeatherType(val colors: List<Color>,
                        val icon: Int,
@@ -98,4 +102,107 @@ enum class WeatherType(val colors: List<Color>,
         dayAnim = R.raw.mist_day,
         nightAnim = R.raw.mist_night
     )
+}
+
+//TODO Change for other Units
+fun Double.toStringTemp(): String =
+    "${this.toInt()}°"
+
+fun String.weatherType(): WeatherType {
+    return when(this) {
+        "01d" -> {
+            //Clear sky
+            WeatherType.CLEAR_SKY
+        }
+
+        "01n" -> {
+            //Clear sky
+            WeatherType.CLEAR_SKY
+        }
+
+        "02d" -> {
+            //Few clouds
+            WeatherType.FEW_CLOUDS
+        }
+
+        "02n" -> {
+            //Few clouds
+            WeatherType.FEW_CLOUDS
+        }
+
+        "03d" -> {
+            //scattered clouds
+            WeatherType.SCATTERED_CLOUDS
+        }
+
+        "03n" -> {
+            //scattered clouds
+            WeatherType.SCATTERED_CLOUDS
+        }
+
+
+        "04d" -> {
+            //broken clouds
+            WeatherType.SCATTERED_CLOUDS
+        }
+
+        "04n" -> WeatherType.BROKEN_CLOUDS
+
+        "09d" -> {
+            //shower rain
+            WeatherType.SHOWER_RAIN
+        }
+
+
+        "09n" -> {
+            //shower rain
+            WeatherType.SHOWER_RAIN
+        }
+
+        "10d" -> {
+            //rain
+            WeatherType.RAIN
+        }
+
+        "10n" -> {
+            WeatherType.RAIN
+        }
+
+        "11d" -> {
+            //thunderstorm
+            WeatherType.THUNDERSTORM
+        }
+
+        "11n" -> {
+            //thunderstorm
+            WeatherType.THUNDERSTORM
+        }
+
+        "13d" -> {
+            //snow
+            WeatherType.SNOW
+        }
+
+        "13n" -> {
+            //snow
+            WeatherType.SNOW
+        }
+
+
+        "50d" -> {
+            //mist
+            WeatherType.MIST
+        }
+
+        "50n" -> {
+            //mist
+            WeatherType.MIST
+        }
+
+        else -> {
+            appLog { "Illegal" }
+            appLog { "Icon: $this" }
+            WeatherType.CLEAR_SKY
+        }
+    }
 }
