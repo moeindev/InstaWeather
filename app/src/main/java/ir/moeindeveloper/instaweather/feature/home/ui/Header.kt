@@ -16,7 +16,8 @@ import ir.moeindeveloper.instaweather.ui.theme.InstaWeatherTheme
 
 @Composable
 fun HomeHeader(lastUpdate: String, city: String, onOptionClick: () -> Unit) {
-    Row(modifier = Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceEvenly) {
+    Row(modifier = Modifier.fillMaxWidth().padding(10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween) {
         Column(modifier = Modifier.padding(5.dp)) {
             Text(text = lastUpdate,
                 color = MaterialTheme.colors.onPrimary.copy(alpha = 0.5f),
