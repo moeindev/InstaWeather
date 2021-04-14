@@ -24,7 +24,8 @@ fun HomeBackground(isNight: Boolean, type: WeatherType){
     LottieAnimation(
         spec = animSpec,
         animationState = animState,
-        modifier = Modifier.size(350.dp)
+        modifier = Modifier.fillMaxWidth()
+            .height(350.dp)
             .padding(10.dp))
 }
 
