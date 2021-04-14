@@ -9,45 +9,36 @@ import com.skydoves.whatif.whatIfNotNullAs
 import io.objectbox.BoxStore
 import ir.moeindeveloper.instaweather.core.platform.entity.BaseEntity
 import ir.moeindeveloper.instaweather.core.platform.entity.BoxEntity
+import ir.moeindeveloper.instaweather.core.state.BackgroundState
+import ir.moeindeveloper.instaweather.core.state.BackgroundStatus
+import ir.moeindeveloper.instaweather.core.state.UiState
 import kotlinx.coroutines.flow.*
 
 abstract class BaseRepository {
 
-    fun <T: Any> networkRequest(
+    fun <T> networkRequest(
         request: suspend() -> ApiResponse<T>,
-        onSuccess: () -> Unit,
-        onError: (message: String) -> Unit,
-        onException: (exception: Throwable) -> Unit
-    ): Flow<T> = flow {
+    ): Flow<BackgroundState<T>> = flow {
         request().suspendOnSuccess {
             this.data.whatIfNotNull { data ->
-                emit(data)
+                emit(BackgroundState.onSuccess(data))
             }
-            onSuccess()
         }.suspendOnException {
-            onException(this.exception)
+            emit(BackgroundState.onException<T>(this.exception.localizedMessage))
         }.suspendOnError {
-            onError(this.statusCode.toString())
+            emit(BackgroundState.onError<T>(this.statusCode.toString()))
         }
     }
 
-    inline fun <T: Any, reified Y: BoxEntity> networkAndCacheRequest(
+    inline fun <T: BaseEntity<Y> , reified Y: BoxEntity> networkAndCacheRequest(
         store: BoxStore,
         crossinline request: suspend() -> ApiResponse<T>,
-        crossinline onSuccess: () -> Unit,
-        crossinline onError: (message: String) -> Unit,
-        crossinline onException: (exception: Throwable) -> Unit
-    ): Flow<Y> = networkRequest(request = { request() },
-        onSuccess = { onSuccess() },
-        onError = { onError(it) },
-        onException = { onException(it) }
-    ).onEach { data ->
-        data.whatIfNotNullAs<BaseEntity<Y>> { entity ->
-            store.boxFor(Y::class.java).put(entity.toBox())
+    ): Flow<BackgroundState<Y>> = networkRequest(request = { request() })
+        .onEach { data ->
+            data.data.whatIfNotNullAs<BaseEntity<Y>> { entity ->
+                store.boxFor(Y::class.java).put(entity.toBox())
+            }
+        }.map {
+            BackgroundState(status = it.status,data = it.data?.toBox(),errorMessage = it.errorMessage)
         }
-    }.transform { data->
-        data.whatIfNotNullAs<BaseEntity<Y>> { entity ->
-            entity.toBox()
-        }
-    }
 }
