@@ -27,7 +27,7 @@ fun HomeCurrent(description: String, temperature: String, unit: String, feelsLik
 
         Divider(modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp),thickness = 5.dp, color = MaterialTheme.colors.onPrimary)
+            .padding(start = 20.dp, end = 20.dp),thickness = 3.dp, color = MaterialTheme.colors.onPrimary)
 
         Text(
             text = description,
