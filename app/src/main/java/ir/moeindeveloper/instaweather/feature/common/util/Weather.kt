@@ -13,9 +13,12 @@ enum class WeatherType(val colors: List<Color>,
                        val nightAnim: Int) {
     CLEAR_SKY(
         colors = listOf(
-            Color(0xFFffd241),
             Color(0xFFffff00),
-            Color(0xFFf3c955)
+            Color(0xFFffd241),
+            Color(0xFFf3c955),
+            Color(0xFFFF964A),
+            Color(0xFFFF3B42),
+            Color.Transparent
         ),
         icon = R.drawable.w_ic_clear_sky,
         dayAnim = R.raw.clear_sky_day,
@@ -23,9 +26,10 @@ enum class WeatherType(val colors: List<Color>,
     ),
     FEW_CLOUDS(
         colors = listOf(
-            Color(0xFF97bcd4),
             Color(0xFFa2bac9),
-            Color(0xFF6d99b6)
+            Color(0xFF97bcd4),
+            Color(0xFF6d99b6),
+            Color.Transparent
         ),
         icon = R.drawable.w_ic_few_clouds,
         dayAnim = R.raw.few_clouds_day,
@@ -35,7 +39,8 @@ enum class WeatherType(val colors: List<Color>,
         colors = listOf(
             Color(0xFFb4b4b4),
             Color(0xFFb7b7b2),
-            Color(0xFF94948d)
+            Color(0xFF94948d),
+            Color.Transparent
         ),
         icon = R.drawable.w_ic_scattered_clouds,
         dayAnim = R.raw.scattered_clouds_day,
@@ -43,9 +48,9 @@ enum class WeatherType(val colors: List<Color>,
     ),
     BROKEN_CLOUDS(
         colors = listOf(
+            Color(0xFF78b9ce),
             Color(0xFFb9d6df),
-            Color(0xFFb4d8e4),
-            Color(0xFF78b9ce)
+            Color(0xFFb4d8e4)
         ),
         icon = R.drawable.w_ic_broken_clouds,
         dayAnim = R.raw.broken_clouds_day,
