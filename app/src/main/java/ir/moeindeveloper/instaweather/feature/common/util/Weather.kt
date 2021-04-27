@@ -83,7 +83,8 @@ enum class WeatherType(val colors: List<Color>,
         colors = listOf(
             Color(0xFF5f646c),
             Color(0xFF5d646e),
-            Color(0xFF696969)
+            Color(0xFF696969),
+            Color.Transparent
         ),
         icon = R.drawable.w_ic_thunderstorm,
         dayAnim = R.raw.thunderstorm_day,
@@ -93,7 +94,8 @@ enum class WeatherType(val colors: List<Color>,
         colors = listOf(
             Color(0xFFffffff),
             Color(0xFFf1eeeb),
-            Color(0xFFf5f5f5)
+            Color(0xFFf5f5f5),
+            Color.Transparent
         ),
         icon = R.drawable.w_ic_snow,
         dayAnim = R.raw.snow_day,
