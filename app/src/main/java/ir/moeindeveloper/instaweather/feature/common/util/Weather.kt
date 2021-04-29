@@ -105,7 +105,8 @@ enum class WeatherType(val colors: List<Color>,
         colors = listOf(
             Color(0xFF5e5551),
             Color(0xFF4b4441),
-            Color(0xFF4a4442)
+            Color(0xFF4a4442),
+            Color.Transparent
         ),
         icon = R.drawable.w_ic_mist,
         dayAnim = R.raw.mist_day,
