@@ -22,6 +22,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    kapt {
+        arguments {
+            arg("objectbox.debug", true)
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
