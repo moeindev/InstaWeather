@@ -3,8 +3,8 @@ apply from: 'appConfig.gradle'
 
 buildscript {
     ext {
-        compose_version = '1.0.0-beta01'
-        hilt_android = '2.33-beta'
+        compose_version = '1.0.0-beta06'
+        hilt_android = '2.35.1'
         objectBox_version = '2.9.1'
     }
     repositories {
@@ -15,7 +15,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.0-alpha15'
         //noinspection GradleDependency
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_android"
         classpath "io.objectbox:objectbox-gradle-plugin:$objectBox_version"
         // NOTE: Do not place your application dependencies here; they belong
