@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="retry">تلاش محدد!</string>
+    <string name="settings_content_description">دکمه تنظیمات</string>
+    <string name="hourly_icon">آیکون ساعتی آب و هوا</string>
+    <string name="select_language">لطفا زبان خود را انتخاب کنید</string>
+    <string name="persian_content">زبان فارسی</string>
+    <string name="english_content">زبان انگلیسی</string>
+    <string name="next_label">بعدی</string>
+</resources>
