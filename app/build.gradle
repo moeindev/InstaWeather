@@ -142,6 +142,8 @@ dependencies {
     //lingVer:
     implementation libraries.lingVer
 
+    implementation libraries.location
+
     //Test libs
     testImplementation testLibraries.jUnit
     testImplementation testLibraries.coroutinesTest
