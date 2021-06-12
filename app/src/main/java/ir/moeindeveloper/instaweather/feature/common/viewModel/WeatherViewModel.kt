@@ -22,7 +22,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(private val repository: WeatherRepository,
-                                           private val ipRepository: IpLocationRepository,
                                            val settings: Settings
                                            ): BaseViewModel() {
 
@@ -39,10 +38,6 @@ class WeatherViewModel @Inject constructor(private val repository: WeatherReposi
                 ).convertToUiState()
             )
         }
-    }
-
-    val ipLocation: StateFlow<UiState<IpLocation>?> = scope {
-        ipRepository.getLocation().convertToUiState()
     }
 
 
