@@ -3,6 +3,7 @@ package ir.moeindeveloper.instaweather.feature.home.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,6 +24,10 @@ const val homeDestName: String = "home_screen"
 fun HomeScreen(mainViewModel: WeatherViewModel,navController: NavController) {
 
     val weatherData = mainViewModel.data.collectAsState()
+
+    LaunchedEffect(key1 = "FirstTime") {
+        mainViewModel.getWeatherData()
+    }
 
     weatherData.value?.let { data ->
         data.appLog { "data = $data" }
