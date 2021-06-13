@@ -52,14 +52,11 @@ fun SelectLanguage(settings: Settings, navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
 
-        SelectLanguageAnim()
+        WalkThroughAnimation(R.raw.select_language)
 
         Spacer(modifier = Modifier.height(50.dp))
 
-        Text(modifier = Modifier.padding(10.dp),
-            text = stringResource(id = R.string.select_language),
-            style = MaterialTheme.typography.h5,
-            color = MaterialTheme.colors.onPrimary)
+        WalkThroughTitle(id = R.string.select_language)
 
         Spacer(modifier = Modifier.height(50.dp))
 
@@ -106,20 +103,6 @@ fun changeLocale(context: Context, language: Settings.Language) {
     Lingver.getInstance().setLocale(context = context, language = language.code)
 }
 
-@Composable
-fun SelectLanguageAnim() {
-    val animSpec = remember { LottieAnimationSpec.RawRes(R.raw.select_language) }
-
-    val animState = rememberLottieAnimationState(autoPlay = true, repeatCount = Int.MAX_VALUE)
-
-    LottieAnimation(
-        spec = animSpec,
-        animationState = animState,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(250.dp)
-            .padding(5.dp))
-}
 
 @ExperimentalMaterialApi
 @Composable
