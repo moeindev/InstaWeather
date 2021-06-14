@@ -7,4 +7,9 @@
     <string name="persian_content">زبان فارسی</string>
     <string name="english_content">زبان انگلیسی</string>
     <string name="next_label">بعدی</string>
+    <string name="find_location">در حال یافتن موقعیت شما</string>
+    <string name="use_gps">استفاده از حسگر موقعیت مکانی</string>
+    <string name="use_ip">استفاده از آی پی شما</string>
+    <string name="using_your_ip">استفاده از آدرس آی‌پی شما...</string>
+    <string name="using_gps">استفاده از حسگر موقعیت مکانی برای یافتن مکان شما...</string>
 </resources>

@@ -9,4 +9,9 @@
     <string name="english_content">English Language</string>
     <string name="english_label" translatable="false">English</string>
     <string name="next_label">Next</string>
+    <string name="find_location">Finding your location</string>
+    <string name="use_gps">Use GPS</string>
+    <string name="use_ip">Use IP Location</string>
+    <string name="using_your_ip">Using your IP address...</string>
+    <string name="using_gps">Using GPS to find your location...</string>
 </resources>
