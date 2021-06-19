@@ -12,4 +12,6 @@
     <string name="use_ip">استفاده از آی پی شما</string>
     <string name="using_your_ip">استفاده از آدرس آی‌پی شما...</string>
     <string name="using_gps">استفاده از حسگر موقعیت مکانی برای یافتن مکان شما...</string>
+    <string name="ip_location_failed">نتوانستیم موفعیت شما را از طریق آی پی پیدا کنیم!</string>
+    <string name="your_location_is">"موقعیت شما: "</string>
 </resources>

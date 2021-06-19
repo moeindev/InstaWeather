@@ -14,4 +14,6 @@
     <string name="use_ip">Use IP Location</string>
     <string name="using_your_ip">Using your IP address...</string>
     <string name="using_gps">Using GPS to find your location...</string>
+    <string name="ip_location_failed">Finding Ip location failed!</string>
+    <string name="your_location_is">Your location is:</string>
 </resources>
