@@ -4,7 +4,7 @@ apply from: 'appConfig.gradle'
 buildscript {
     ext {
         compose_version = '1.0.0-beta08'
-        hilt_android = '2.36'
+        hilt_android = '2.37'
         objectBox_version = '2.9.1'
     }
     repositories {
@@ -14,7 +14,7 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0-beta03'
+        classpath 'com.android.tools.build:gradle:7.1.0-alpha02'
         //noinspection GradleDependency
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_android"
