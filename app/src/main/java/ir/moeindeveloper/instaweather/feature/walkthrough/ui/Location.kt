@@ -26,14 +26,17 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.google.accompanist.coil.rememberCoilPainter
 import com.skydoves.whatif.whatIfNotNull
+import com.skydoves.whatif.whatIfNotNullWith
 import ir.moeindeveloper.instaweather.R
-import ir.moeindeveloper.instaweather.core.state.UiState
 import ir.moeindeveloper.instaweather.core.state.UiStatus
 import ir.moeindeveloper.instaweather.feature.common.extensions.GoogleAvailability
 import ir.moeindeveloper.instaweather.feature.walkthrough.viewModel.WalkThroughViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 const val FindLocationNavDest: String = "find_location"
 
 
+@ExperimentalCoroutinesApi
 @Composable
 fun FindLocation(viewModel: WalkThroughViewModel, navController: NavController, onAskForLocation: () -> Unit) {
     val launcher = rememberLauncherForActivityResult(
@@ -53,6 +56,7 @@ fun FindLocation(viewModel: WalkThroughViewModel, navController: NavController, 
 
     Column(modifier = Modifier
         .fillMaxSize()
+        .padding(5.dp)
         .verticalScroll(state = ScrollState(0)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween) {
@@ -65,7 +69,8 @@ fun FindLocation(viewModel: WalkThroughViewModel, navController: NavController, 
             UseIpLocation(viewModel) {
                 useIp.value = false
             }
-        } else {
+        }
+        else {
             //check for permission
                 context.GoogleAvailability(
                     onInstalled = {
@@ -93,6 +98,10 @@ fun FindLocation(viewModel: WalkThroughViewModel, navController: NavController, 
                     }
                 )
         }
+
+        LocationButton(id = R.string.next_label) {
+            //TODO finish and go to main Activity
+        }
     }
 }
 
@@ -103,8 +112,10 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
     locationState.value.whatIfNotNull { state ->
         when(state.status) {
             UiStatus.LOADING -> {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    FindingYourLocationText()
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)) {
+                    LocationText(R.string.find_location)
                     LocationButton(id = R.string.use_gps) {
                         onUseGMS()
                     }
@@ -112,11 +123,10 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
             }
 
             UiStatus.Failure -> {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(id = R.string.find_location),
-                        style = MaterialTheme.typography.body1,
-                        color = MaterialTheme.colors.onPrimary)
-
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)) {
+                    LocationText(id = R.string.find_location)
                     LocationButton(id = R.string.use_gps) {
                         onUseGMS()
                     }
@@ -126,10 +136,10 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
             UiStatus.SUCCESS -> {
                 state.data.whatIfNotNull { ipLocation ->
                     val locStr = "${ipLocation.query} \n ${ipLocation.city}, ${ipLocation.country}"
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Text(text = stringResource(id = R.string.your_location_is),
-                            style = MaterialTheme.typography.body1,
-                            color = MaterialTheme.colors.onPrimary)
+                    Column(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)) {
+                        LocationText(id = R.string.your_location_is)
 
                         Row(modifier = Modifier.fillMaxWidth()) {
 
@@ -151,9 +161,30 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
     }
 }
 
+@ExperimentalCoroutinesApi
 @Composable
 fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit) {
+    val locationState = viewModel.locationProvider.fetchUpdates().collectAsState(initial = null)
 
+    locationState.value?.whatIfNotNullWith({ loc ->
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp)) {
+            val locationStr = "Latitude: ${loc.latitude}, Longitude: ${loc.longitude}"
+            LocationButton(id = R.string.use_ip) {
+                onUseIpLocation()
+            }
+        }
+    }, {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(5.dp)) {
+            LocationText(id = R.string.find_location)
+            LocationButton(id = R.string.use_ip) {
+                onUseIpLocation()
+            }
+        }
+    })
 }
 
 
@@ -178,8 +209,8 @@ fun LocationButton(@StringRes id: Int, onClick: () -> Unit) {
 }
 
 @Composable
-fun FindingYourLocationText() {
-    Text(text = stringResource(id = R.string.find_location),
+fun LocationText(@StringRes id: Int) {
+    Text(text = stringResource(id = id),
         style = MaterialTheme.typography.body1,
         color = MaterialTheme.colors.onPrimary)
 }
