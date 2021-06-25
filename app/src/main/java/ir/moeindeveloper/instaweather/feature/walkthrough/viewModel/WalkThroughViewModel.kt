@@ -6,6 +6,7 @@ import ir.moeindeveloper.instaweather.core.extension.transformToFlow
 import ir.moeindeveloper.instaweather.core.platform.viewModel.BaseViewModel
 import ir.moeindeveloper.instaweather.core.state.UiState
 import ir.moeindeveloper.instaweather.feature.common.entity.IpLocation
+import ir.moeindeveloper.instaweather.feature.common.location.LocationProvider
 import ir.moeindeveloper.instaweather.feature.common.preferences.Settings
 import ir.moeindeveloper.instaweather.feature.common.repository.IpLocationRepository
 import kotlinx.coroutines.channels.Channel
@@ -15,7 +16,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WalkThroughViewModel @Inject constructor(private val repository: IpLocationRepository, val settings: Settings): BaseViewModel() {
+class WalkThroughViewModel @Inject constructor(private val repository: IpLocationRepository,
+                                               val settings: Settings,
+                                               val locationProvider: LocationProvider): BaseViewModel() {
 
     private val locationLoadingChannel: Channel<String> = Channel()
 
