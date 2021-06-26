@@ -15,6 +15,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -61,7 +62,7 @@ fun FindLocation(viewModel: WalkThroughViewModel, mustFinishActivity: () -> Unit
         .padding(5.dp)
         .verticalScroll(state = ScrollState(0)),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween) {
+        verticalArrangement = Arrangement.SpaceAround) {
 
         WalkThroughAnimation(R.raw.location)
 
@@ -102,7 +103,7 @@ fun FindLocation(viewModel: WalkThroughViewModel, mustFinishActivity: () -> Unit
         }
 
         LocationButton(id = R.string.next_label) {
-            viewModel.settings.firstTime = false
+            viewModel.finishUpWalkThough()
             val mainHome = Intent(context, MainActivity::class.java)
             context.startActivity(mainHome)
             mustFinishActivity()
@@ -113,6 +114,12 @@ fun FindLocation(viewModel: WalkThroughViewModel, mustFinishActivity: () -> Unit
 @Composable
 fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
     val locationState = viewModel.ipLocation.collectAsState()
+
+    LaunchedEffect(key1 = "RunOnRecompose") {
+        viewModel.loadIpLocation()
+    }
+
+    Log.e("IPLoc", "${locationState.value}")
 
     locationState.value.whatIfNotNull { state ->
         when(state.status) {
@@ -131,7 +138,7 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
                 Column(modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp)) {
-                    LocationText(id = R.string.find_location)
+                    LocationText(id = R.string.ip_location_failed)
                     LocationButton(id = R.string.use_gps) {
                         onUseGMS()
                     }
@@ -145,7 +152,7 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
                         longitude = ipLocation.lon
                     )
 
-                    viewModel.settings.location = location
+                    viewModel.saveLocation(location)
 
                     val locStr = "${ipLocation.query} \n ${ipLocation.city}, ${ipLocation.country}"
                     Column(modifier = Modifier
@@ -183,7 +190,7 @@ fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit)
             longitude = loc.longitude
         )
 
-        viewModel.settings.location = location
+        viewModel.saveLocation(location)
 
         Column(modifier = Modifier
             .fillMaxWidth()
