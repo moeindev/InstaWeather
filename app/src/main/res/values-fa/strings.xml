@@ -14,4 +14,6 @@
     <string name="using_gps">استفاده از حسگر موقعیت مکانی برای یافتن مکان شما...</string>
     <string name="ip_location_failed">نتوانستیم موفعیت شما را از طریق آی پی پیدا کنیم!</string>
     <string name="your_location_is">"موقعیت شما: "</string>
+    <string name="install_gms">لطفآ خدمات گوگل پلی را برای استفاده از این سرویس نصب کنید!</string>
+    <string name="update_gms">لطفآ خدمات گوگل را در دستگاه خود بروزرسانی کنید!</string>
 </resources>

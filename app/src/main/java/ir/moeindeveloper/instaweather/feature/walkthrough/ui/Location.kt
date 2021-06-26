@@ -140,7 +140,6 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
                         .fillMaxWidth()
                         .padding(5.dp)) {
                         LocationText(id = R.string.your_location_is)
-
                         Row(modifier = Modifier.fillMaxWidth()) {
 
                             Image(painter = rememberCoilPainter(request = "https://www.countryflags.io/${ipLocation.countryCode.lowercase()}/shiny/64.png")
@@ -170,7 +169,8 @@ fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit)
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp)) {
-            val locationStr = "Latitude: ${loc.latitude}, Longitude: ${loc.longitude}"
+            val locationStr = "${stringResource(id = R.string.your_location_is )} Latitude: ${loc.latitude}, Longitude: ${loc.longitude}"
+            LocationText(string = locationStr)
             LocationButton(id = R.string.use_ip) {
                 onUseIpLocation()
             }
@@ -190,12 +190,26 @@ fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit)
 
 @Composable
 fun GMSNotInstalled(onUseIpLocation: () -> Unit) {
-
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(5.dp)) {
+        LocationText(id = R.string.install_gms)
+        LocationButton(id = R.string.use_ip) {
+            onUseIpLocation()
+        }
+    }
 }
 
 @Composable
 fun GMSNeedUpdate(onUseIpLocation: () -> Unit) {
-
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(5.dp)) {
+        LocationText(id = R.string.install_gms)
+        LocationButton(id = R.string.use_ip) {
+            onUseIpLocation()
+        }
+    }
 }
 
 @Composable
@@ -209,8 +223,8 @@ fun LocationButton(@StringRes id: Int, onClick: () -> Unit) {
 }
 
 @Composable
-fun LocationText(@StringRes id: Int) {
-    Text(text = stringResource(id = id),
+fun LocationText(@StringRes id: Int = 0, string: String = "") {
+    Text(text = if (id != 0) stringResource(id = id) else string,
         style = MaterialTheme.typography.body1,
         color = MaterialTheme.colors.onPrimary)
 }

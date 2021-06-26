@@ -16,4 +16,6 @@
     <string name="using_gps">Using GPS to find your location...</string>
     <string name="ip_location_failed">Finding Ip location failed!</string>
     <string name="your_location_is">Your location is:</string>
+    <string name="install_gms">Please install google play services to use this feature!</string>
+    <string name="update_gms">Please update google play services on your device!</string>
 </resources>
