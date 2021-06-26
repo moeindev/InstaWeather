@@ -154,12 +154,13 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
 
                     viewModel.saveLocation(location)
 
-                    val locStr = "${ipLocation.query} \n ${ipLocation.city}, ${ipLocation.country}"
+                    val locStr = "${ipLocation.query}, ${ipLocation.city}, ${ipLocation.country}"
                     Column(modifier = Modifier
                         .fillMaxWidth()
-                        .padding(5.dp)) {
+                        .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                         LocationText(id = R.string.your_location_is)
-                        Row(modifier = Modifier.fillMaxWidth()) {
+
+                        Row(modifier = Modifier.fillMaxWidth().padding(5.dp), horizontalArrangement = Arrangement.Center) {
 
                             Image(painter = rememberCoilPainter(request = "https://www.countryflags.io/${ipLocation.countryCode.lowercase()}/shiny/64.png")
                                 , contentDescription = ipLocation.country)
@@ -167,10 +168,9 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
                             Text(text = locStr,
                                 style = MaterialTheme.typography.body1,
                                 color = MaterialTheme.colors.onPrimary)
-
-                            LocationButton(id = R.string.use_gps) {
-                                onUseGMS()
-                            }
+                        }
+                        LocationButton(id = R.string.use_gps) {
+                            onUseGMS()
                         }
                     }
                 }
