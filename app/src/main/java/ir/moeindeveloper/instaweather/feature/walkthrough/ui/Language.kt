@@ -1,6 +1,7 @@
 package ir.moeindeveloper.instaweather.feature.walkthrough.ui
 
 import android.content.Context
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -13,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.skydoves.whatif.whatIf
 import com.yariksoffice.lingver.Lingver
 import ir.moeindeveloper.instaweather.R
 import ir.moeindeveloper.instaweather.feature.common.preferences.Settings
@@ -22,7 +24,7 @@ const val languageDestName: String = "select_language"
 
 @ExperimentalMaterialApi
 @Composable
-fun SelectLanguage(settings: Settings, navController: NavController) {
+fun SelectLanguage(settings: Settings, navController: NavController, mustFinishActivity: () -> Unit) {
 
     val farsiSelected = rememberSaveable {
         mutableStateOf(settings.language == Settings.Language.FA)
@@ -37,6 +39,12 @@ fun SelectLanguage(settings: Settings, navController: NavController) {
     }
 
     val context = LocalContext.current
+
+    BackHandler {
+        if (navController.previousBackStackEntry?.destination?.route == splashDestName) {
+            mustFinishActivity()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -63,6 +71,7 @@ fun SelectLanguage(settings: Settings, navController: NavController) {
                 settings.language = lang
                 changeLocale(context = context, language = lang)
                 languageChanged.value = true
+                goToLocation(navController)
             }
 
             Spacer(modifier = Modifier.width(30.dp))
@@ -77,18 +86,14 @@ fun SelectLanguage(settings: Settings, navController: NavController) {
                 settings.language = lang
                 changeLocale(context = context, language = lang)
                 languageChanged.value = true
+                goToLocation(navController)
             }
         }
-
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Button(onClick = { navController.navigate(findLocationNavDest) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)) {
-            Text(text = stringResource(id = R.string.next_label), style = MaterialTheme.typography.body2)
-        }
     }
+}
+
+fun goToLocation(navController: NavController) {
+    navController.navigate(findLocationNavDest)
 }
 
 fun changeLocale(context: Context, language: Settings.Language) {

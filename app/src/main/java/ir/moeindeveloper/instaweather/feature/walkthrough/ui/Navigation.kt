@@ -26,7 +26,9 @@ fun SetupWalkThroughNavigation(onActivityStart: () -> Unit) {
         }
 
         composable(languageDestName) {
-            SelectLanguage(settings = viewModel.settings, navController = navController)
+            SelectLanguage(settings = viewModel.settings, navController = navController) {
+                onActivityStart()
+            }
         }
 
         composable(findLocationNavDest) {
