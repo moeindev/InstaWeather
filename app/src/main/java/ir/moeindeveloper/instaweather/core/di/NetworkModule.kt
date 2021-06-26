@@ -46,7 +46,7 @@ object NetworkModule {
         return Retrofit.Builder().client(okHttpClient)
             .baseUrl(baseURL)
             .addConverterFactory(GsonConverterFactory.create())
-            //.addCallAdapterFactory(CoroutinesResponseCallAdapterFactory())
+            .addCallAdapterFactory(CoroutinesResponseCallAdapterFactory.create())
             .build()
     }
 
