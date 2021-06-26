@@ -3,7 +3,6 @@ package ir.moeindeveloper.instaweather.feature.walkthrough.ui
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -12,18 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieAnimationSpec
-import com.airbnb.lottie.compose.rememberLottieAnimationState
 import com.yariksoffice.lingver.Lingver
 import ir.moeindeveloper.instaweather.R
-import ir.moeindeveloper.instaweather.core.log.appLog
 import ir.moeindeveloper.instaweather.feature.common.preferences.Settings
-import ir.moeindeveloper.instaweather.feature.common.preferences.SettingsImpl
-import ir.moeindeveloper.instaweather.ui.theme.InstaWeatherTheme
 
 const val languageDestName: String = "select_language"
 
@@ -90,7 +82,7 @@ fun SelectLanguage(settings: Settings, navController: NavController) {
 
         Spacer(modifier = Modifier.height(50.dp))
 
-        Button(onClick = { navController.navigate(FindLocationNavDest) },
+        Button(onClick = { navController.navigate(findLocationNavDest) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)) {

@@ -23,7 +23,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavController
 import com.google.accompanist.coil.rememberCoilPainter
 import com.skydoves.whatif.whatIfNotNull
 import com.skydoves.whatif.whatIfNotNullWith
@@ -33,12 +32,12 @@ import ir.moeindeveloper.instaweather.feature.common.extensions.GoogleAvailabili
 import ir.moeindeveloper.instaweather.feature.walkthrough.viewModel.WalkThroughViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-const val FindLocationNavDest: String = "find_location"
+const val findLocationNavDest: String = "find_location"
 
 
 @ExperimentalCoroutinesApi
 @Composable
-fun FindLocation(viewModel: WalkThroughViewModel, navController: NavController, onAskForLocation: () -> Unit) {
+fun FindLocation(viewModel: WalkThroughViewModel) {
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) {
