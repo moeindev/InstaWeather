@@ -3,7 +3,7 @@ apply from: 'appConfig.gradle'
 
 buildscript {
     ext {
-        compose_version = '1.0.0-beta08'
+        compose_version = '1.0.0-beta09'
         hilt_android = '2.37'
         objectBox_version = '2.9.1'
     }
