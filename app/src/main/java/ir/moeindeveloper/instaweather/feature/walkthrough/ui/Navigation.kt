@@ -13,11 +13,17 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 @Composable
-fun SetupWalkThroughNavigation() {
+fun SetupWalkThroughNavigation(onActivityStart: () -> Unit) {
     val navController = rememberNavController()
     val viewModel: WalkThroughViewModel = hiltViewModel()
 
-    NavHost(navController = navController, startDestination = languageDestName) {
+    NavHost(navController = navController, startDestination = splashDestName) {
+
+        composable(splashDestName) {
+            Splash(settings = viewModel.settings, navController) {
+                onActivityStart()
+            }
+        }
 
         composable(languageDestName) {
             SelectLanguage(settings = viewModel.settings, navController = navController)
