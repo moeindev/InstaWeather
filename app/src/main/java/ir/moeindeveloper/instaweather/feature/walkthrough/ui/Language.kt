@@ -14,7 +14,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.skydoves.whatif.whatIf
 import com.yariksoffice.lingver.Lingver
 import ir.moeindeveloper.instaweather.R
 import ir.moeindeveloper.instaweather.feature.common.preferences.Settings
