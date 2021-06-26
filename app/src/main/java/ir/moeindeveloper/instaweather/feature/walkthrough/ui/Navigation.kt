@@ -30,7 +30,9 @@ fun SetupWalkThroughNavigation(onActivityStart: () -> Unit) {
         }
 
         composable(findLocationNavDest) {
-            FindLocation(viewModel = viewModel)
+            FindLocation(viewModel = viewModel) {
+                onActivityStart()
+            }
         }
     }
 }

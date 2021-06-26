@@ -1,6 +1,7 @@
 package ir.moeindeveloper.instaweather.feature.walkthrough.ui
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -26,9 +27,11 @@ import androidx.core.content.ContextCompat
 import com.google.accompanist.coil.rememberCoilPainter
 import com.skydoves.whatif.whatIfNotNull
 import com.skydoves.whatif.whatIfNotNullWith
+import ir.moeindeveloper.instaweather.MainActivity
 import ir.moeindeveloper.instaweather.R
 import ir.moeindeveloper.instaweather.core.state.UiStatus
 import ir.moeindeveloper.instaweather.feature.common.extensions.GoogleAvailability
+import ir.moeindeveloper.instaweather.feature.common.preferences.Settings
 import ir.moeindeveloper.instaweather.feature.walkthrough.viewModel.WalkThroughViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -37,7 +40,7 @@ const val findLocationNavDest: String = "find_location"
 
 @ExperimentalCoroutinesApi
 @Composable
-fun FindLocation(viewModel: WalkThroughViewModel) {
+fun FindLocation(viewModel: WalkThroughViewModel, mustFinishActivity: () -> Unit) {
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) {
@@ -99,7 +102,10 @@ fun FindLocation(viewModel: WalkThroughViewModel) {
         }
 
         LocationButton(id = R.string.next_label) {
-            //TODO finish and go to main Activity
+            viewModel.settings.firstTime = false
+            val mainHome = Intent(context, MainActivity::class.java)
+            context.startActivity(mainHome)
+            mustFinishActivity()
         }
     }
 }
@@ -134,6 +140,13 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
 
             UiStatus.SUCCESS -> {
                 state.data.whatIfNotNull { ipLocation ->
+                    val location = Settings.Location(
+                        latitude = ipLocation.lat,
+                        longitude = ipLocation.lon
+                    )
+
+                    viewModel.settings.location = location
+
                     val locStr = "${ipLocation.query} \n ${ipLocation.city}, ${ipLocation.country}"
                     Column(modifier = Modifier
                         .fillMaxWidth()
@@ -165,6 +178,13 @@ fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit)
     val locationState = viewModel.locationProvider.fetchUpdates().collectAsState(initial = null)
 
     locationState.value?.whatIfNotNullWith({ loc ->
+        val location = Settings.Location(
+            latitude = loc.latitude,
+            longitude = loc.longitude
+        )
+
+        viewModel.settings.location = location
+
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp)) {
