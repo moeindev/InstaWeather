@@ -46,13 +46,7 @@ class LocationProvider @Inject constructor(
     companion object {
         const val UPDATE_INTERVAL_SECS = 10L
         const val FASTEST_UPDATE_INTERVAL_SECS = 2L
-        val REQUEST_CHECK_SETTINGS: Int = 333
+        const val REQUEST_CHECK_SETTINGS: Int = 333
     }
 
-
-    enum class LocationSettingsStatus {
-        SHOWING_DIALOG,
-        EXECUTE_ERROR,
-        GPS_ERROR
-    }
 }
