@@ -192,7 +192,7 @@ fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit)
 
         Column(modifier = Modifier
             .fillMaxWidth()
-            .padding(5.dp)) {
+            .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             val locationStr = "${stringResource(id = R.string.your_location_is )} Latitude: ${loc.latitude}, Longitude: ${loc.longitude}"
             LocationText(string = locationStr)
             LocationButton(id = R.string.use_ip) {
@@ -202,7 +202,7 @@ fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit)
     }, {
         Column(modifier = Modifier
             .fillMaxWidth()
-            .padding(5.dp)) {
+            .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             LocationText(id = R.string.find_location)
             LocationButton(id = R.string.use_ip) {
                 onUseIpLocation()
@@ -216,7 +216,7 @@ fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit)
 fun GMSNotInstalled(onUseIpLocation: () -> Unit) {
     Column(modifier = Modifier
         .fillMaxWidth()
-        .padding(5.dp)) {
+        .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         LocationText(id = R.string.install_gms)
         LocationButton(id = R.string.use_ip) {
             onUseIpLocation()
@@ -228,7 +228,7 @@ fun GMSNotInstalled(onUseIpLocation: () -> Unit) {
 fun GMSNeedUpdate(onUseIpLocation: () -> Unit) {
     Column(modifier = Modifier
         .fillMaxWidth()
-        .padding(5.dp)) {
+        .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         LocationText(id = R.string.install_gms)
         LocationButton(id = R.string.use_ip) {
             onUseIpLocation()
