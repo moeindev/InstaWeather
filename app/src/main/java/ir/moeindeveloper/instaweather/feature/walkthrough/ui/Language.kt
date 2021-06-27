@@ -33,10 +33,6 @@ fun SelectLanguage(settings: Settings, navController: NavController, mustFinishA
         mutableStateOf(settings.language == Settings.Language.EN)
     }
 
-    val languageChanged = remember {
-        mutableStateOf(false)
-    }
-
     val context = LocalContext.current
 
     BackHandler {
@@ -67,10 +63,7 @@ fun SelectLanguage(settings: Settings, navController: NavController, mustFinishA
                 selected = farsiSelected.value,
                 language = Settings.Language.FA
             ) { lang ->
-                settings.language = lang
-                changeLocale(context = context, language = lang)
-                languageChanged.value = true
-                goToLocation(navController)
+                handleLanguageItem(settings,lang,context,navController)
             }
 
             Spacer(modifier = Modifier.width(30.dp))
@@ -82,13 +75,17 @@ fun SelectLanguage(settings: Settings, navController: NavController, mustFinishA
                 selected = englishSelected.value,
                 language = Settings.Language.EN
             ) { lang ->
-                settings.language = lang
-                changeLocale(context = context, language = lang)
-                languageChanged.value = true
-                goToLocation(navController)
+                handleLanguageItem(settings,lang,context,navController)
             }
         }
     }
+}
+
+
+fun handleLanguageItem(settings: Settings,language: Settings.Language, context: Context, navController: NavController) {
+    settings.language = language
+    changeLocale(context = context, language = language)
+    goToLocation(navController)
 }
 
 fun goToLocation(navController: NavController) {
