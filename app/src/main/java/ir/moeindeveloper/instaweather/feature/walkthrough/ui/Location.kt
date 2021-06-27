@@ -179,7 +179,7 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
 @ExperimentalCoroutinesApi
 @Composable
 fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit) {
-    val locationState = viewModel.locationProvider.fetchUpdates().collectAsState(initial = null)
+    val locationState = viewModel.locationProvider.fetchUpdates().collectAsState(initial = viewModel.settings.location)
 
     locationState.value?.whatIfNotNullWith({ loc ->
         val location = Settings.Location(
@@ -192,7 +192,7 @@ fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit)
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            val locationStr = "${stringResource(id = R.string.your_location_is )} Latitude: ${loc.latitude}, Longitude: ${loc.longitude}"
+            val locationStr = "${stringResource(id = R.string.your_location_is )} Latitude=${loc.latitude},Longitude=${loc.longitude}"
             LocationText(string = locationStr)
             LocationButton(id = R.string.use_ip) {
                 onUseIpLocation()
