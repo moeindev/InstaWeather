@@ -14,10 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -115,7 +112,7 @@ fun FindLocation(viewModel: WalkThroughViewModel, mustFinishActivity: () -> Unit
 fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
     val locationState = viewModel.ipLocation.collectAsState()
 
-    LaunchedEffect(key1 = "RunOnRecompose") {
+    SideEffect {
         viewModel.loadIpLocation()
     }
 
@@ -158,7 +155,9 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
                         .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                         LocationText(id = R.string.your_location_is)
 
-                        Row(modifier = Modifier.fillMaxWidth().padding(5.dp), horizontalArrangement = Arrangement.Center) {
+                        Row(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(5.dp), horizontalArrangement = Arrangement.Center) {
 
                             Image(painter = rememberCoilPainter(request = "https://www.countryflags.io/${ipLocation.countryCode.lowercase()}/shiny/64.png")
                                 , contentDescription = ipLocation.country)
