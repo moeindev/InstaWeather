@@ -1,9 +1,8 @@
 package ir.moeindeveloper.instaweather.core.di
 
-import android.annotation.SuppressLint
+
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,11 +33,4 @@ object LocalModule {
     fun provideSettings(preferences: SharedPreferences): Settings =
         SettingsImpl(preferences = preferences)
 
-
-    @SuppressLint("VisibleForTests")
-    @Provides
-    @Singleton
-    fun providesFusedLocationProviderClient(@ApplicationContext context: Context): FusedLocationProviderClient {
-        return FusedLocationProviderClient(context)
-    }
 }

@@ -1,11 +1,13 @@
 package ir.moeindeveloper.instaweather.feature.common.location
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Looper
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import ir.moeindeveloper.instaweather.feature.common.preferences.Settings
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -15,14 +17,9 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class LocationProvider @Inject constructor(
+    private val locationRequest: LocationRequest,
     private val client: FusedLocationProviderClient
 ) {
-
-    private val locationRequest: LocationRequest = LocationRequest.create().apply {
-        interval = TimeUnit.SECONDS.toMillis(UPDATE_INTERVAL_SECS)
-        fastestInterval = TimeUnit.SECONDS.toMillis(FASTEST_UPDATE_INTERVAL_SECS)
-        priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-    }
 
     @ExperimentalCoroutinesApi
     @SuppressLint("MissingPermission")
@@ -47,10 +44,15 @@ class LocationProvider @Inject constructor(
     }
 
     companion object {
-        private const val UPDATE_INTERVAL_SECS = 10L
-        private const val FASTEST_UPDATE_INTERVAL_SECS = 2L
+        const val UPDATE_INTERVAL_SECS = 10L
+        const val FASTEST_UPDATE_INTERVAL_SECS = 2L
+        val REQUEST_CHECK_SETTINGS: Int = 333
     }
 
 
-
+    enum class LocationSettingsStatus {
+        SHOWING_DIALOG,
+        EXECUTE_ERROR,
+        GPS_ERROR
+    }
 }
