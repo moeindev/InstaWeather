@@ -18,4 +18,5 @@
     <string name="your_location_is">Your location is:</string>
     <string name="install_gms">Please install google play services to use this feature!</string>
     <string name="update_gms">Please update google play services on your device!</string>
+    <string name="gps_unavailable">Gps is unavailable</string>
 </resources>
