@@ -119,14 +119,12 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
         viewModel.loadIpLocation()
     }
 
-    Log.e("IPLoc", "${locationState.value}")
-
     locationState.value.whatIfNotNull { state ->
         when(state.status) {
             UiStatus.LOADING -> {
                 Column(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)) {
+                    .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     LocationText(R.string.find_location)
                     LocationButton(id = R.string.use_gps) {
                         onUseGMS()
@@ -137,7 +135,7 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
             UiStatus.Failure -> {
                 Column(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)) {
+                    .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     LocationText(id = R.string.ip_location_failed)
                     LocationButton(id = R.string.use_gps) {
                         onUseGMS()
