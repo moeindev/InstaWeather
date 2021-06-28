@@ -1,10 +1,12 @@
 package ir.moeindeveloper.instaweather.feature.walkthrough.ui
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -29,21 +31,19 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.LocationSettingsResponse
 import com.google.android.gms.location.LocationSettingsStatusCodes
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.skydoves.whatif.whatIfNotNull
 import com.skydoves.whatif.whatIfNotNullWith
 import ir.moeindeveloper.instaweather.MainActivity
 import ir.moeindeveloper.instaweather.R
-import ir.moeindeveloper.instaweather.core.extension.getActivity
 import ir.moeindeveloper.instaweather.core.state.UiStatus
 import ir.moeindeveloper.instaweather.feature.common.extensions.GoogleAvailability
 import ir.moeindeveloper.instaweather.feature.common.location.LocationProvider
-import ir.moeindeveloper.instaweather.feature.common.location.LocationProvider.Companion.REQUEST_CHECK_SETTINGS
 import ir.moeindeveloper.instaweather.feature.common.preferences.Settings
 import ir.moeindeveloper.instaweather.feature.walkthrough.viewModel.WalkThroughViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 
 const val findLocationNavDest: String = "find_location"
 
@@ -53,67 +53,22 @@ const val findLocationNavDest: String = "find_location"
 fun FindLocation(viewModel: WalkThroughViewModel, mustFinishActivity: () -> Unit) {
     val context = LocalContext.current
 
-    val scope = rememberCoroutineScope()
 
     val useIp = rememberSaveable {
         mutableStateOf(true)
     }
 
-    val gpsTurnedOn = rememberSaveable {
-        mutableStateOf(LocationProvider.LocationSettingsStatus.WAITING)
-    }
-
-    val permissionGranted = remember {
-        mutableStateOf(false)
-    }
 
 
     val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()) { granted ->
-        if (granted) {
+        contract = ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
+            && permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
             Log.d("LocationPermission", "Granted")
-            scope.launch { permissionGranted.value = true }
+            useIp.value = false
         } else {
             Log.d("LocationPermission", "Denied")
-            scope.launch { permissionGranted.value = false }
-        }
-    }
-
-    SideEffect {
-        if (permissionGranted.value) {
-            val locationSettingsBuilder = LocationSettingsRequest.Builder().apply {
-                addLocationRequest(viewModel.locationProvider.locationRequest)
-            }
-
-            val task : Task<LocationSettingsResponse> = LocationServices.getSettingsClient(context).checkLocationSettings(locationSettingsBuilder.build())
-
-            task.addOnSuccessListener {
-                Log.d("gps_available",it.locationSettingsStates?.isGpsUsable.toString())
-                gpsTurnedOn.value = LocationProvider.LocationSettingsStatus.SUCCESS
-            }
-
-            task.addOnFailureListener { exception ->
-                exception.printStackTrace()
-                when((exception as ApiException).statusCode) {
-
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                        gpsTurnedOn.value = LocationProvider.LocationSettingsStatus.WAITING
-                        context.getActivity().whatIfNotNull { appCompatActivity ->
-                            val resolvableApiException = exception as ResolvableApiException
-                            resolvableApiException.startResolutionForResult(appCompatActivity, REQUEST_CHECK_SETTINGS)
-                        }
-                    }
-
-                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                        gpsTurnedOn.value = LocationProvider.LocationSettingsStatus.ERROR
-                    }
-
-                    else -> {
-                        gpsTurnedOn.value = LocationProvider.LocationSettingsStatus.ERROR
-                        exception.printStackTrace()
-                    }
-                }
-            }
+            useIp.value = true
         }
     }
 
@@ -130,45 +85,26 @@ fun FindLocation(viewModel: WalkThroughViewModel, mustFinishActivity: () -> Unit
 
         if (useIp.value) {
             UseIpLocation(viewModel) {
-                useIp.value = false
+                when(PackageManager.PERMISSION_GRANTED) {
+                    ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) -> {
+                        useIp.value = false
+                    }
+
+                    else -> {
+                        launcher.launch(arrayOf(
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ))
+                    }
+                }
             }
         }
         else {
             //check for permission
                 context.GoogleAvailability(
                     onInstalled = {
-                        when(PackageManager.PERMISSION_GRANTED) {
-                            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) -> {
-                                permissionGranted.value = true
-                                when(gpsTurnedOn.value) {
-                                    LocationProvider.LocationSettingsStatus.SUCCESS -> {
-                                        UseGMSLocation(viewModel) {
-                                            useIp.value = true
-                                        }
-                                    }
-
-                                    LocationProvider.LocationSettingsStatus.WAITING -> {
-                                        WaitingForGPS {
-                                            useIp.value = true
-                                        }
-                                    }
-
-                                    LocationProvider.LocationSettingsStatus.ERROR -> {
-                                        GpsNotAvailable {
-                                            useIp.value = true
-                                        }
-                                    }
-                                }
-
-                            }
-
-                            else -> {
-                                permissionGranted.value = true
-                                launcher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-                                WaitingForGPS {
-                                    useIp.value = true
-                                }
-                            }
+                        UseGMSLocation(viewModel = viewModel) {
+                            useIp.value = true
                         }
                     },
                     onNotInstalled = {
@@ -264,35 +200,107 @@ fun UseIpLocation(viewModel: WalkThroughViewModel, onUseGMS: () -> Unit) {
 @ExperimentalCoroutinesApi
 @Composable
 fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit) {
-    val locationState = viewModel.gmsLocation.collectAsState()
 
-    locationState.value?.whatIfNotNullWith({ loc ->
-        val location = Settings.Location(
-            latitude = loc.latitude,
-            longitude = loc.longitude
-        )
+    val context = LocalContext.current
 
-        viewModel.saveLocation(location)
+    val gpsTurnedOn = rememberSaveable {
+        mutableStateOf(LocationProvider.LocationSettingsStatus.WAITING)
+    }
 
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            val locationStr = "${stringResource(id = R.string.your_location_is )} Latitude: ${loc.latitude}, Longitude: ${loc.longitude}"
-            LocationText(string = locationStr)
-            LocationButton(id = R.string.use_ip) {
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            gpsTurnedOn.value = LocationProvider.LocationSettingsStatus.SUCCESS
+        } else {
+            gpsTurnedOn.value = LocationProvider.LocationSettingsStatus.ERROR
+        }
+    }
+
+    val successCallback = remember {
+        OnSuccessListener<LocationSettingsResponse> {
+            Log.d("gps_available",it.locationSettingsStates?.isGpsUsable.toString())
+            gpsTurnedOn.value = LocationProvider.LocationSettingsStatus.SUCCESS
+        }
+    }
+
+    val failureListener = remember {
+        OnFailureListener { exception ->
+            exception.printStackTrace()
+            when((exception as ApiException).statusCode) {
+
+                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                    gpsTurnedOn.value = LocationProvider.LocationSettingsStatus.WAITING
+                    val resolvableApiException = exception as ResolvableApiException
+                    launcher.launch(IntentSenderRequest.Builder(resolvableApiException.resolution).build())
+                }
+
+                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                    gpsTurnedOn.value = LocationProvider.LocationSettingsStatus.ERROR
+                }
+
+                else -> {
+                    gpsTurnedOn.value = LocationProvider.LocationSettingsStatus.ERROR
+                    exception.printStackTrace()
+                }
+            }
+        }
+    }
+
+    val locationSettingsBuilder = LocationSettingsRequest.Builder().apply {
+        addLocationRequest(viewModel.locationProvider.locationRequest)
+    }
+
+    val task : Task<LocationSettingsResponse> = LocationServices.getSettingsClient(context).checkLocationSettings(locationSettingsBuilder.build())
+
+    task.addOnSuccessListener(successCallback)
+
+    task.addOnFailureListener(failureListener)
+
+
+
+    when(gpsTurnedOn.value) {
+        LocationProvider.LocationSettingsStatus.SUCCESS -> {
+            val locationState = viewModel.gmsLocation.collectAsState()
+            locationState.value.whatIfNotNullWith({ loc ->
+                val location = Settings.Location(
+                    latitude = loc.latitude,
+                    longitude = loc.longitude
+                )
+
+                viewModel.saveLocation(location)
+
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    val locationStr = "${stringResource(id = R.string.your_location_is )} Latitude: ${loc.latitude}, Longitude: ${loc.longitude}"
+                    LocationText(string = locationStr)
+                    LocationButton(id = R.string.use_ip) {
+                        onUseIpLocation()
+                    }
+                }
+            }, {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    LocationText(id = R.string.find_location)
+                    LocationButton(id = R.string.use_ip) {
+                        onUseIpLocation()
+                    }
+                }
+            })
+        }
+
+        LocationProvider.LocationSettingsStatus.WAITING -> {
+            WaitingForGPS {
                 onUseIpLocation()
             }
         }
-    }, {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            LocationText(id = R.string.find_location)
-            LocationButton(id = R.string.use_ip) {
+
+        LocationProvider.LocationSettingsStatus.ERROR -> {
+            GpsNotAvailable {
                 onUseIpLocation()
             }
         }
-    })
+    }
 }
 
 
