@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieAnimationSpec
@@ -20,9 +22,10 @@ import com.airbnb.lottie.compose.rememberLottieAnimationState
 @Composable
 fun WalkThroughTitle(@StringRes id: Int) {
     Text(text = stringResource(id = id),
-        modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 10.dp, bottom = 10.dp).fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         style = MaterialTheme.typography.h5,
-        color = MaterialTheme.colors.onPrimary)
+        color = MaterialTheme.colors.onPrimary,
+        textAlign = TextAlign.Center)
 }
 
 @Composable

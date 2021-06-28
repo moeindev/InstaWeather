@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.google.accompanist.coil.rememberCoilPainter
@@ -271,7 +272,7 @@ fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit)
                 Column(modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                    val locationStr = "${stringResource(id = R.string.your_location_is )} Latitude: ${loc.latitude}, Longitude: ${loc.longitude}"
+                    val locationStr = "${stringResource(id = R.string.your_location_is )} Lat= ${loc.latitude.toBigDecimal()}, Lng= ${loc.longitude.toBigDecimal()}"
                     LocationText(string = locationStr)
                     LocationButton(id = R.string.use_ip) {
                         onUseIpLocation()
@@ -366,7 +367,8 @@ fun LocationButton(@StringRes id: Int, onClick: () -> Unit) {
 fun LocationText(@StringRes id: Int = 0, string: String = "") {
     Text(text = if (id != 0) stringResource(id = id) else string,
         style = MaterialTheme.typography.body1,
-        color = MaterialTheme.colors.onPrimary)
+        color = MaterialTheme.colors.onPrimary,
+        textAlign = TextAlign.Center)
 }
 
 //@Preview(showSystemUi = true)
