@@ -8,9 +8,7 @@ import ir.moeindeveloper.instaweather.R
 import ir.moeindeveloper.instaweather.core.log.appLog
 
 enum class WeatherType(val colors: List<Color>,
-                       val icon: Int,
-                       val dayAnim: Int,
-                       val nightAnim: Int) {
+                       val icon: Int) {
     CLEAR_SKY(
         colors = listOf(
             Color(0xFFffff00),
@@ -20,9 +18,7 @@ enum class WeatherType(val colors: List<Color>,
             Color(0xFFFF3B42),
             Color.Transparent
         ),
-        icon = R.drawable.w_ic_clear_sky,
-        dayAnim = R.raw.clear_sky_day,
-        nightAnim = R.raw.clear_sky_night
+        icon = R.drawable.w_ic_clear_sky
     ),
     FEW_CLOUDS(
         colors = listOf(
@@ -31,9 +27,7 @@ enum class WeatherType(val colors: List<Color>,
             Color(0xFF6d99b6),
             Color.Transparent
         ),
-        icon = R.drawable.w_ic_few_clouds,
-        dayAnim = R.raw.few_clouds_day,
-        nightAnim = R.raw.few_clouds_night
+        icon = R.drawable.w_ic_few_clouds
     ),
     SCATTERED_CLOUDS(
         colors = listOf(
@@ -42,9 +36,7 @@ enum class WeatherType(val colors: List<Color>,
             Color(0xFF94948d),
             Color.Transparent
         ),
-        icon = R.drawable.w_ic_scattered_clouds,
-        dayAnim = R.raw.scattered_clouds_day,
-        nightAnim =R.raw.scattered_clouds_night
+        icon = R.drawable.w_ic_scattered_clouds
     ),
     BROKEN_CLOUDS(
         colors = listOf(
@@ -52,9 +44,7 @@ enum class WeatherType(val colors: List<Color>,
             Color(0xFFb9d6df),
             Color(0xFFb4d8e4)
         ),
-        icon = R.drawable.w_ic_broken_clouds,
-        dayAnim = R.raw.broken_clouds_day,
-        nightAnim = R.raw.broken_clouds_night
+        icon = R.drawable.w_ic_broken_clouds
     ),
     SHOWER_RAIN(
         colors = listOf(
@@ -63,9 +53,7 @@ enum class WeatherType(val colors: List<Color>,
             Color(0xFF325672),
             Color.Transparent
         ),
-        icon = R.drawable.w_ic_shower_rain,
-        dayAnim = R.raw.shower_rain_day,
-        nightAnim = R.raw.shower_rain_night
+        icon = R.drawable.w_ic_shower_rain
     ),
     RAIN(
         colors = listOf(
@@ -74,9 +62,7 @@ enum class WeatherType(val colors: List<Color>,
             Color(0xFF4682b4),
             Color.Transparent
         ),
-        icon = R.drawable.w_ic_rain,
-        dayAnim = R.raw.rain_day,
-        nightAnim = R.raw.rain_night
+        icon = R.drawable.w_ic_rain
     ),
 
     THUNDERSTORM(
@@ -86,9 +72,7 @@ enum class WeatherType(val colors: List<Color>,
             Color(0xFF696969),
             Color.Transparent
         ),
-        icon = R.drawable.w_ic_thunderstorm,
-        dayAnim = R.raw.thunderstorm_day,
-        nightAnim = R.raw.thunderstorm_night
+        icon = R.drawable.w_ic_thunderstorm
     ),
     SNOW(
         colors = listOf(
@@ -97,9 +81,7 @@ enum class WeatherType(val colors: List<Color>,
             Color(0xFFf5f5f5),
             Color.Transparent
         ),
-        icon = R.drawable.w_ic_snow,
-        dayAnim = R.raw.snow_day,
-        nightAnim = R.raw.snow_night
+        icon = R.drawable.w_ic_snow
     ),
     MIST(
         colors = listOf(
@@ -108,9 +90,7 @@ enum class WeatherType(val colors: List<Color>,
             Color(0xFF4a4442),
             Color.Transparent
         ),
-        icon = R.drawable.w_ic_mist,
-        dayAnim = R.raw.mist_day,
-        nightAnim = R.raw.mist_night
+        icon = R.drawable.w_ic_mist
     )
 }
 

@@ -1,7 +1,7 @@
 package ir.moeindeveloper.instaweather.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -14,7 +14,7 @@ fun SetupNavigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = homeDestName) {
         composable(homeDestName) {
-            val weatherViewModel: WeatherViewModel = hiltNavGraphViewModel()
+            val weatherViewModel: WeatherViewModel = hiltViewModel()
             HomeScreen(mainViewModel = weatherViewModel,navController = navController)
         }
 
