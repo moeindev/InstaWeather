@@ -22,9 +22,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class WalkThroughActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var settingsTask: Task<LocationSettingsResponse>
-
     @ExperimentalCoroutinesApi
     @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,25 +33,5 @@ class WalkThroughActivity : AppCompatActivity() {
                 }
             }
         }
-
-        val callBack = OnCompleteListener<LocationSettingsResponse> { task ->
-            try {
-                task.getResult(ApiException::class.java)
-            } catch (ex: ApiException) {
-                when (ex.statusCode) {
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                        val resolvableApiException = ex as ResolvableApiException
-                        resolvableApiException.startResolutionForResult(this,REQUEST_CHECK_SETTINGS)
-                    }
-
-                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                        toaster(message = getString(R.string.gps_unavailable))
-                    }
-                }
-            }
-        }
-
-        settingsTask.addOnCompleteListener(callBack)
-
     }
 }

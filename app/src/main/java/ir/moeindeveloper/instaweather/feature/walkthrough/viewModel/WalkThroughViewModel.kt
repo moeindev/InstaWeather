@@ -9,6 +9,7 @@ import ir.moeindeveloper.instaweather.feature.common.entity.IpLocation
 import ir.moeindeveloper.instaweather.feature.common.location.LocationProvider
 import ir.moeindeveloper.instaweather.feature.common.preferences.Settings
 import ir.moeindeveloper.instaweather.feature.common.repository.IpLocationRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.emitAll
@@ -26,6 +27,15 @@ class WalkThroughViewModel @Inject constructor(private val repository: IpLocatio
         locationLoadingChannel.transformToFlow {
             emitAll(
                 repository.getLocation().convertToUiState()
+            )
+        }
+    }
+
+    @ExperimentalCoroutinesApi
+    val gmsLocation : StateFlow<Settings.Location?> = scope {
+        locationLoadingChannel.transformToFlow {
+            emitAll(
+                locationProvider.fetchUpdates()
             )
         }
     }

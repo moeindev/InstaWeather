@@ -19,4 +19,5 @@
     <string name="install_gms">Please install google play services to use this feature!</string>
     <string name="update_gms">Please update google play services on your device!</string>
     <string name="gps_unavailable">Gps is unavailable</string>
+    <string name="waiting_for_turning_on_gps">Waiting for the GPS to turn on</string>
 </resources>
