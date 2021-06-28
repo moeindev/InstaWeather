@@ -33,11 +33,10 @@ class LocationProvider @Inject constructor(
                     latitude = location.latitude,
                     longitude = location.longitude
                 )
-                trySend(userLocation)
+                this@callbackFlow.trySend(userLocation).isSuccess
             }
 
         }
-
         client.requestLocationUpdates(locationRequest, callBack, Looper.getMainLooper())
         awaitClose { client.removeLocationUpdates(callBack) }
     }
@@ -45,7 +44,6 @@ class LocationProvider @Inject constructor(
     companion object {
         const val UPDATE_INTERVAL_SECS = 10L
         const val FASTEST_UPDATE_INTERVAL_SECS = 2L
-        val REQUEST_CHECK_SETTINGS: Int = 333
     }
 
 
