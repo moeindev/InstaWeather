@@ -17,4 +17,5 @@
     <string name="install_gms">لطفآ خدمات گوگل پلی را برای استفاده از این سرویس نصب کنید!</string>
     <string name="update_gms">لطفآ خدمات گوگل را در دستگاه خود بروزرسانی کنید!</string>
     <string name="gps_unavailable">جی پی اس در دسترس نیست</string>
+    <string name="waiting_for_turning_on_gps">در حال انتظار برای روشن کردن جی پی اس</string>
 </resources>
