@@ -31,12 +31,13 @@ class WalkThroughViewModel @Inject constructor(private val repository: IpLocatio
         }
     }
 
+    private val gmsLoadingChannel: Channel<String> = Channel()
+
+
     @ExperimentalCoroutinesApi
     val gmsLocation : StateFlow<Settings.Location?> = scope {
-        locationLoadingChannel.transformToFlow {
-            emitAll(
-                locationProvider.fetchUpdates()
-            )
+        gmsLoadingChannel.transformToFlow {
+            emitAll(locationProvider.fetchUpdates())
         }
     }
 
@@ -46,6 +47,11 @@ class WalkThroughViewModel @Inject constructor(private val repository: IpLocatio
         }
     }
 
+    fun loadUpGMS() {
+        viewModelScope.launch {
+            gmsLoadingChannel.send("LoadGMS")
+        }
+    }
 
     fun saveLocation(location: Settings.Location) {
         settings.location = location

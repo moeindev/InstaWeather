@@ -261,6 +261,11 @@ fun UseGMSLocation(viewModel: WalkThroughViewModel, onUseIpLocation: () -> Unit)
     when(gpsTurnedOn.value) {
         LocationProvider.LocationSettingsStatus.SUCCESS -> {
             val locationState = viewModel.gmsLocation.collectAsState()
+
+            LaunchedEffect(key1 = "FirstTime") {
+                viewModel.loadUpGMS()
+            }
+
             locationState.value.whatIfNotNullWith({ loc ->
                 val location = Settings.Location(
                     latitude = loc.latitude,
