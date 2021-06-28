@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class LocationProvider @Inject constructor(
-    private val locationRequest: LocationRequest,
+    val locationRequest: LocationRequest,
     private val client: FusedLocationProviderClient
 ) {
 
@@ -39,7 +39,6 @@ class LocationProvider @Inject constructor(
         }
 
         client.requestLocationUpdates(locationRequest, callBack, Looper.getMainLooper())
-
         awaitClose { client.removeLocationUpdates(callBack) }
     }
 
@@ -51,8 +50,8 @@ class LocationProvider @Inject constructor(
 
 
     enum class LocationSettingsStatus {
-        SHOWING_DIALOG,
-        EXECUTE_ERROR,
-        GPS_ERROR
+        WAITING,
+        SUCCESS,
+        ERROR
     }
 }

@@ -2,6 +2,7 @@ package ir.moeindeveloper.instaweather.core.di
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import dagger.Module
@@ -34,15 +35,4 @@ object LocationModule {
         priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
     }
 
-    @Provides
-    @Singleton
-    fun providesSettingsBuilder(locationRequest: LocationRequest): LocationSettingsRequest.Builder = LocationSettingsRequest.Builder().apply {
-        addLocationRequest(locationRequest)
-        setAlwaysShow(true)
-    }
-
-    @Provides
-    @Singleton
-    fun locationSettingsResponse(@ApplicationContext context: Context, settingsBuilder: LocationSettingsRequest.Builder): Task<LocationSettingsResponse> =
-        LocationServices.getSettingsClient(context).checkLocationSettings(settingsBuilder.build())
 }
