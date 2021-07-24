@@ -8,16 +8,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieAnimationSpec
-import com.airbnb.lottie.compose.rememberLottieAnimationState
-
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
 fun WalkThroughTitle(@StringRes id: Int) {
@@ -30,15 +29,15 @@ fun WalkThroughTitle(@StringRes id: Int) {
 
 @Composable
 fun WalkThroughAnimation(@RawRes id: Int) {
-    val animSpec = remember { LottieAnimationSpec.RawRes(id) }
-
-    val animState = rememberLottieAnimationState(autoPlay = true, repeatCount = Int.MAX_VALUE)
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(id))
+    val progress by animateLottieCompositionAsState(composition)
 
     LottieAnimation(
-        spec = animSpec,
-        animationState = animState,
+        composition,
+        progress,
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
-            .padding(5.dp))
+            .padding(5.dp)
+    )
 }
