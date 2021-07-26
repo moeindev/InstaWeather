@@ -1,3 +1,26 @@
 <resources>
-    <string name="app_name">InstaWeather</string>
+    <string name="app_name" translatable="false">InstaWeather</string>
+    <string name="retry">Retry!</string>
+    <string name="settings_content_description">Settings Button</string>
+    <string name="hourly_icon">Hourly weather Icon</string>
+    <string name="select_language">Please select your language</string>
+    <string name="persian_content">Persian Language</string>
+    <string name="persian_label" translatable="false">فارسی</string>
+    <string name="english_content">English Language</string>
+    <string name="english_label" translatable="false">English</string>
+    <string name="find_location">Finding your location</string>
+    <string name="use_gps">Use GPS</string>
+    <string name="use_ip">Use IP Location</string>
+    <string name="using_your_ip">Using your IP address...</string>
+    <string name="using_gps">Using GPS to find your location...</string>
+    <string name="ip_location_failed">Finding Ip location failed!</string>
+    <string name="your_location_is">Your location is:</string>
+    <string name="install_gms">Please install google play services to use this feature!</string>
+    <string name="update_gms">Please update google play services on your device!</string>
+    <string name="gps_unavailable">Gps is unavailable</string>
+    <string name="waiting_for_turning_on_gps">Waiting for the GPS to turn on</string>
+    <string name="next_label">Finish</string>
+    <string name="selected_language">Language</string>
+    <string name="general_settings">General</string>
+    <string name="last_update">Last Update at</string>
 </resources>

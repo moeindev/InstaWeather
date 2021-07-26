@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="retry">تلاش محدد!</string>
+    <string name="settings_content_description">دکمه تنظیمات</string>
+    <string name="hourly_icon">آیکون ساعتی آب و هوا</string>
+    <string name="select_language">لطفا زبان خود را انتخاب کنید</string>
+    <string name="persian_content">زبان فارسی</string>
+    <string name="english_content">زبان انگلیسی</string>
+    <string name="next_label">تمام</string>
+    <string name="find_location">در حال یافتن موقعیت شما</string>
+    <string name="use_gps">استفاده از حسگر موقعیت مکانی</string>
+    <string name="use_ip">استفاده از آی پی شما</string>
+    <string name="using_your_ip">استفاده از آدرس آی‌پی شما...</string>
+    <string name="using_gps">استفاده از حسگر موقعیت مکانی برای یافتن مکان شما...</string>
+    <string name="ip_location_failed">نتوانستیم موفعیت شما را از طریق آی پی پیدا کنیم!</string>
+    <string name="your_location_is">"موقعیت شما: "</string>
+    <string name="install_gms">لطفآ خدمات گوگل پلی را برای استفاده از این سرویس نصب کنید!</string>
+    <string name="update_gms">لطفآ خدمات گوگل را در دستگاه خود بروزرسانی کنید!</string>
+    <string name="gps_unavailable">جی پی اس در دسترس نیست</string>
+    <string name="waiting_for_turning_on_gps">در حال انتظار برای روشن کردن جی پی اس</string>
+    <string name="selected_language">زبان</string>
+    <string name="general_settings">عمومی</string>
+    <string name="last_update">"آخرین بروزرسانی در "</string>
+</resources>
