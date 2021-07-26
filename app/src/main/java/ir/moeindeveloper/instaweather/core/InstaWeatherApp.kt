@@ -15,6 +15,9 @@ class InstaWeatherApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Lingver.init(application = this, defaultLanguage = settings.language.code)
+        if (this::settings.isInitialized) {
+            Lingver.init(application = this, defaultLanguage = settings.language.code)
+        }
     }
+
 }

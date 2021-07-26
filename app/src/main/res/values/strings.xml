@@ -20,4 +20,7 @@
     <string name="gps_unavailable">Gps is unavailable</string>
     <string name="waiting_for_turning_on_gps">Waiting for the GPS to turn on</string>
     <string name="next_label">Finish</string>
+    <string name="selected_language">Language</string>
+    <string name="general_settings">General</string>
+    <string name="last_update">Last Update at</string>
 </resources>

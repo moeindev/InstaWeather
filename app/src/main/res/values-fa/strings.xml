@@ -18,4 +18,7 @@
     <string name="update_gms">لطفآ خدمات گوگل را در دستگاه خود بروزرسانی کنید!</string>
     <string name="gps_unavailable">جی پی اس در دسترس نیست</string>
     <string name="waiting_for_turning_on_gps">در حال انتظار برای روشن کردن جی پی اس</string>
+    <string name="selected_language">زبان</string>
+    <string name="general_settings">عمومی</string>
+    <string name="last_update">"آخرین بروزرسانی در "</string>
 </resources>
